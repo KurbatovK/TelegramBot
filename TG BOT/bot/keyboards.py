@@ -5,9 +5,10 @@ def main_keyboard():
     builder = InlineKeyboardBuilder()
     builder.add(
         InlineKeyboardButton(text='Расписание преподавателя', callback_data='teacher'),
-        InlineKeyboardButton(text='Твоё расписание', callback_data='schedule')
+        InlineKeyboardButton(text='Твоё расписание', callback_data='schedule'),
+        InlineKeyboardButton(text='Информация', callback_data="information")
     )
-    builder.adjust(1)
+    builder.adjust(2, 1)
     return builder.as_markup()
 
 def program_keyboard():
@@ -36,7 +37,11 @@ def courses_keyboard(program_type):
 
 def groups_keyboard(program_year):
     builder = InlineKeyboardBuilder()
+    program = program_year.split('_')[0]  # 'bachelor' или 'master'
+
     # Здесь группы
     builder.button(text="Пример группы", callback_data="group_1")
-    builder.button(text='Назад', callback_data=f'back_to_{program_year.split("_")[0]}')
+
+    builder.button(text='Назад', callback_data=f'back_to_{program}')
+    builder.adjust(1)
     return builder.as_markup()
