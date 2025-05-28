@@ -1,7 +1,7 @@
 from aiogram import F, Router
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message, CallbackQuery
-from bot.keyboard.keyboards import (
+from bot.handlers.keyboards import (
     main_keyboard,
     program_keyboard,
     courses_keyboard,
@@ -84,7 +84,7 @@ async def schedule(callback: CallbackQuery):
 async def back_to_main(callback: CallbackQuery):
     await callback.answer()
     await callback.message.edit_text(
-    f'Привет, {message.from_user.first_name} ! Я бот, который знает твоё расписание лучше деканата 😉 Выбирай свою группу — больше не пропустишь ни одной пары!',
+    f'Привет, {callback.from_user.first_name} ! Я бот, который знает твоё расписание лучше деканата 😉 Выбирай свою группу — больше не пропустишь ни одной пары!',
         reply_markup=main_keyboard()
     )
 
