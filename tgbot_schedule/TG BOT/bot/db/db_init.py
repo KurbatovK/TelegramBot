@@ -1,5 +1,4 @@
 import sqlite3
-from datetime import datetime
 
 def init_db():
     conn = sqlite3.connect('schedule.db')

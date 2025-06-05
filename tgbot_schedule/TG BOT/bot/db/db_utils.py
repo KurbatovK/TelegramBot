@@ -7,18 +7,18 @@ logger = logging.getLogger(__name__)
 
 def save_to_db(data: list, query_params: dict):
     if not data:
-        logger.warning("Attempt to save empty data to DB")
+        logger.warning("Попытка сохранить пустые данные в БД")
         return
     
     if not data or not all(item.get('id') for item in data):
-        logger.warning("Invalid data received, not saving to DB")
+        logger.warning("Получены неверные данные, не сохраняются в БД")
         return
 
     try:
         conn = sqlite3.connect('schedule.db')
         cursor = conn.cursor()
         
-        # Используем INSERT OR REPLACE для избежания конфликтов
+        #INSERT OR REPLACE для избежания конфликтов
         for item in data:
             cursor.execute('''
             INSERT OR REPLACE INTO schedule (
@@ -39,10 +39,10 @@ def save_to_db(data: list, query_params: dict):
             ))
         
         conn.commit()
-        logger.info(f"Saved {len(data)} records to DB for {query_params}")
+        logger.info(f"Сохраненные {len(data)} записи в БД для {query_params}")
         
     except sqlite3.Error as e:
-        logger.error(f"Database error: {e}")
+        logger.error(f"db ошибка: {e}")
         raise  # Пробрасываем исключение дальше
     finally:
         if conn:
@@ -61,7 +61,7 @@ def get_cached(query_params: dict):
         
         rows = cursor.fetchall()
         if not rows:
-            logger.debug("No cached data found")
+            logger.debug("Кэшированные данные не найдены.")
             return None
             
         # Проверяем актуальность данных
@@ -69,7 +69,7 @@ def get_cached(query_params: dict):
         last_updated = datetime.strptime(last_updated_str, '%Y-%m-%d %H:%M:%S')
         
         if (datetime.now() - last_updated).total_seconds() > Config.CACHE_TTL:
-            logger.debug("Cached data expired")
+            logger.debug("Срок действия кэшированных данных истек")
             return None
             
         # Форматируем результат

@@ -109,6 +109,27 @@ class APIClient:
         except Exception as e:
             logger.error(f"Unexpected error: {str(e)}", exc_info=True)
             return None
+    
+    async def fetch_all_teachers(self) -> list:
+        """Получить список всех преподавателей из расписания"""
+        try:
+            # Получаем расписание за последнюю неделю (чтобы охватить всех активных преподавателей)
+            date_list = [(datetime.now() - timedelta(days=i)).strftime('%Y-%m-%d') for i in range(7)]
+            group_list = Config.GROUPS
+            
+            batch_data = await self.fetch_batch_schedules(date_list, group_list)
+            
+            teachers = set()
+            for data in batch_data.values():
+                for pair in data:
+                    if pair.get('teacher'):
+                        teachers.add(pair['teacher'])
+            
+            return sorted([{"full_name": t} for t in teachers], key=lambda x: x['full_name'])
+        
+        except Exception as e:
+            logger.error(f"Error fetching teachers list: {e}", exc_info=True)
+            return []
 
 async def fetch_schedule_from_api(query_params: dict) -> list | None:
     """Основной интерфейс для получения расписания"""

@@ -2,7 +2,7 @@ import asyncio
 import logging
 from aiogram import Bot, Dispatcher
 from config import Config
-from bot.handlers.handlers import router
+from bot.handlers import BaseHandler
 from bot.db.db_init import init_db
 
 #логирования
@@ -14,28 +14,28 @@ logger = logging.getLogger(__name__)
 
 async def main():
     try:
-        logger.info("Starting bot initialization...")
+        logger.info("Инициализация бота...")
         
-        #инициируем бд
+        #инициируем
         init_db()
-        logger.info("Database initialized")
+        logger.info("Инициализируем БД...")
         
-        #создание и подключение бота
+        #подключаем бота
         bot = Bot(token=Config.TOKEN)
         dp = Dispatcher()
         
         #подключение роутеров
-        dp.include_router(router)
-        logger.info("Router configured")
+        dp.include_router(BaseHandler.router)
+        logger.info("Маршруты настроены...")
         
-        #запуск бота
-        logger.info("Bot started polling...")
+        #запуск
+        logger.info("Бот запущен...")
         await dp.start_polling(bot)
         
     except Exception as e:
-        logger.critical(f"Fatal error: {str(e)}", exc_info=True)
+        logger.critical(f"Ошибка: {str(e)}", exc_info=True)
     finally:
-        logger.info("Bot stopped")
+        logger.info("Стоп бота")
 
 if __name__ == "__main__":
     asyncio.run(main())

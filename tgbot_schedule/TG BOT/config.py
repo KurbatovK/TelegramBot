@@ -1,9 +1,9 @@
 class Config:
-    TOKEN = '7717177353:AAHXXOVveceZPi4rMSsfMmzMm5GJe71CMo8'
-    API_URL = 'https://raspmath.isu.ru/getScheduleForTest'
+    TOKEN = '7717177353:AAHXXOVveceZPi4rMSsfMmzMm5GJe71CMo8' #от тгбота
+    API_URL = 'https://raspmath.isu.ru/getScheduleForTest' 
     API_TOKEN = 'da9ca528-5602-4f20-8d74-da2a73fe8cb3'
-    CACHE_TTL = 604800
-    GROUPS = ['02121-ДБ', '02122-ДБ', '02123-ДБ', 
+    CACHE_TTL = 604800 #7дней
+    GROUPS = ['02121-ДБ', '02122-ДБ', '02123-ДБ',
               '02141-ДБ', '02161-ДБ', '02162-ДБ', 
               '02171-ДБ', '02172-ДБ', '02181-ДБ',
               '02221-ДБ', '02222-ДБ', '02223-ДБ', 

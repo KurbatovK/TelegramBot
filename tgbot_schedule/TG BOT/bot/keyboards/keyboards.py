@@ -12,6 +12,16 @@ def main_keyboard():
     builder.adjust(2, 2)
     return builder.as_markup()
 
+def teachers_action_keyboard():
+    builder = InlineKeyboardBuilder()
+    builder.add(
+        InlineKeyboardButton(text='🔍 Ввести фамилию', callback_data='enter_teacher_name'),
+        InlineKeyboardButton(text='📋 Список преподавателей', callback_data='show_all_teachers'),
+        InlineKeyboardButton(text='⬅️ Назад', callback_data='back_to_main')
+    )
+    builder.adjust(1, 1, 1)
+    return builder.as_markup()
+
 def program_keyboard():
     builder = InlineKeyboardBuilder()
     builder.add(
@@ -78,7 +88,6 @@ def day_selection_keyboard(group_name, program_year):
     return builder.as_markup()
 
 def get_period_keyboard(prefix: str, entity: str):
-    """Универсальная клавиатура для выбора периода"""
     builder = InlineKeyboardBuilder()
     builder.add(
         InlineKeyboardButton(text="Сегодня", callback_data=f"{prefix}_today_{entity}"),
